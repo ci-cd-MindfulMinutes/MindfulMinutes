@@ -66,3 +66,13 @@ resource "aws_instance" "backend" {
     Name = "${var.project_name}-${var.environment}-backend"
   }
 }
+
+# Elastic IP for Backend
+resource "aws_eip" "backend_eip" {
+  instance = aws_instance.backend.id
+  domain   = "vpc"
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-backend-eip"
+  }
+}
