@@ -46,12 +46,57 @@ data "aws_ami" "amazon_linux_2" {
   }
 }
 
+# IAM Role for EC2 (SSM and ECR access)
+resource "aws_iam_role" "backend_ec2_role" {
+  name = "${var.project_name}-${var.environment}-backend-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-backend-ec2-role"
+  }
+}
+
+# Attach SSM policy for remote management
+resource "aws_iam_role_policy_attachment" "backend_ssm" {
+  role       = aws_iam_role.backend_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+# Attach ECR policy for pulling Docker images
+resource "aws_iam_role_policy_attachment" "backend_ecr" {
+  role       = aws_iam_role.backend_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
+# IAM Instance Profile
+resource "aws_iam_instance_profile" "backend_profile" {
+  name = "${var.project_name}-${var.environment}-backend-profile"
+  role = aws_iam_role.backend_ec2_role.name
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-backend-profile"
+  }
+}
+
 # Backend EC2 Instance
 resource "aws_instance" "backend" {
   ami           = data.aws_ami.amazon_linux_2.id
   instance_type = var.instance_type
 
   vpc_security_group_ids = [aws_security_group.backend_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.backend_profile.name
 
   user_data = <<-EOF
               #!/bin/bash
