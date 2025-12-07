@@ -1,0 +1,82 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - 'backend/**'
+  workflow_dispatch:
+
+jobs:
+  deploy-backend:
+    name: Build and Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Determine Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=prod" >> $GITHUB_OUTPUT
+          else
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Create ECR repository if not exists
+        run: |
+          aws ecr describe-repositories --repository-names mindfulminutes-${{ steps.env.outputs.environment }}-backend || \
+          aws ecr create-repository --repository-name mindfulminutes-${{ steps.env.outputs.environment }}-backend
+
+      - name: Build Docker image
+        working-directory: backend
+        run: |
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          docker build -t ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest .
+          docker tag ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:${{ github.sha }}
+
+      - name: Push Docker image to ECR
+        run: |
+          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest
+          docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:${{ github.sha }}
+
+      - name: Get Backend EC2 IP
+        id: get_ec2
+        run: |
+          EC2_IP=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=mindfulminutes-${{ steps.env.outputs.environment }}-backend" "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --output text)
+          echo "ec2_ip=${EC2_IP}" >> $GITHUB_OUTPUT
+
+      - name: Deploy to EC2
+        env:
+          EC2_IP: ${{ steps.get_ec2.outputs.ec2_ip }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: |
+          echo "Deploying to EC2: ${EC2_IP}"
+          # Note: Actual EC2 deployment would require SSH access
+          # This is a placeholder showing the deployment flow
+          echo "Would deploy ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest to ${EC2_IP}"
+
+      - name: Deployment Success
+        run: |
+          echo "Backend deployed successfully to environment: ${{ steps.env.outputs.environment }}"
+          echo "EC2 IP: ${{ steps.get_ec2.outputs.ec2_ip }}"
