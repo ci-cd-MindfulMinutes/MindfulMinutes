@@ -66,27 +66,79 @@ jobs:
           docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest
           docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:${{ github.sha }}
 
-      - name: Get Backend EC2 IP
+      - name: Get Backend EC2 Instance ID
         id: get_ec2
         run: |
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=mindfulminutes-${{ steps.env.outputs.environment }}-backend" "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text)
           EC2_IP=$(aws ec2 describe-instances \
             --filters "Name=tag:Name,Values=mindfulminutes-${{ steps.env.outputs.environment }}-backend" "Name=instance-state-name,Values=running" \
             --query "Reservations[0].Instances[0].PublicIpAddress" \
             --output text)
+          echo "instance_id=${INSTANCE_ID}" >> $GITHUB_OUTPUT
           echo "ec2_ip=${EC2_IP}" >> $GITHUB_OUTPUT
 
       - name: Deploy to EC2
         env:
-          EC2_IP: ${{ steps.get_ec2.outputs.ec2_ip }}
+          INSTANCE_ID: ${{ steps.get_ec2.outputs.instance_id }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_NAME: mindfulminutes-${{ steps.env.outputs.environment }}-backend
           MONGO_URI: ${{ steps.env.outputs.environment == 'prod' && secrets.PROD_MONGO_URI || secrets.DEV_MONGO_URI }}
+          AWS_REGION: us-east-1
         run: |
-          echo "Deploying to EC2: ${EC2_IP}"
-          # Note: Actual EC2 deployment would require SSH access
-          # This is a placeholder showing the deployment flow
-          echo "Would deploy ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest to ${EC2_IP}"
+          # Create deployment script
+          cat > deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+
+          # Login to ECR
+          aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+
+          # Pull latest image
+          docker pull ${ECR_REGISTRY}/${IMAGE_NAME}:latest
+
+          # Stop and remove existing container if running
+          docker stop mindfulminutes-backend || true
+          docker rm mindfulminutes-backend || true
+
+          # Run new container
+          docker run -d \
+            --name mindfulminutes-backend \
+            --restart unless-stopped \
+            -p 3000:3000 \
+            -e MONGO_URI="${MONGO_URI}" \
+            -e PORT=3000 \
+            ${ECR_REGISTRY}/${IMAGE_NAME}:latest
+
+          # Show container status
+          docker ps | grep mindfulminutes-backend
+          EOF
+
+          # Make script executable
+          chmod +x deploy.sh
+
+          # Copy script to EC2 and execute via SSM
+          aws ssm send-command \
+            --instance-ids ${INSTANCE_ID} \
+            --document-name "AWS-RunShellScript" \
+            --parameters "commands=[
+              'export AWS_REGION=${AWS_REGION}',
+              'export ECR_REGISTRY=${ECR_REGISTRY}',
+              'export IMAGE_NAME=${IMAGE_NAME}',
+              'export MONGO_URI=\"${MONGO_URI}\"',
+              'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}',
+              'docker pull ${ECR_REGISTRY}/${IMAGE_NAME}:latest',
+              'docker stop mindfulminutes-backend || true',
+              'docker rm mindfulminutes-backend || true',
+              'docker run -d --name mindfulminutes-backend --restart unless-stopped -p 3000:3000 -e MONGO_URI=\"${MONGO_URI}\" -e PORT=3000 ${ECR_REGISTRY}/${IMAGE_NAME}:latest',
+              'docker ps | grep mindfulminutes-backend'
+            ]" \
+            --output text
 
       - name: Deployment Success
         run: |
           echo "Backend deployed successfully to environment: ${{ steps.env.outputs.environment }}"
           echo "EC2 IP: ${{ steps.get_ec2.outputs.ec2_ip }}"
+          echo "Backend API: http://${{ steps.get_ec2.outputs.ec2_ip }}:3000"
