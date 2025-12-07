@@ -1,4 +1,4 @@
-# Development Environment Variables
+# Development Environment Variables for Mindfulness
 
 environment   = "dev"
 aws_region    = "us-east-1"
