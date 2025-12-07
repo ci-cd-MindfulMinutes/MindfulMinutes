@@ -9,6 +9,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { DataService } from '../shared/data.service';
 import { AppService } from '../shared/app.service';
 import { count, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-signup',
@@ -23,6 +24,7 @@ import { count, Observable } from 'rxjs';
   styleUrl: './signup.component.css'
 })
 export class SignupComponent {
+    private apiUrl = environment.apiUrl;
     signedupUserId: string | null = '';
     userName = '';
     signupUser: Signup = { name: "", email: "", password: ""};
@@ -53,7 +55,7 @@ export class SignupComponent {
     }
 
     signup() {
-        this.http.post<{ message: string, username: string, userId: string }>('http://localhost:4000/api/users/register', this.signupUser).subscribe(response => {
+        this.http.post<{ message: string, username: string, userId: string }>(`${this.apiUrl}/api/users/register`, this.signupUser).subscribe(response => {
             // Handle successful signup
             console.log('signup successful: ', response);
             this.signedupUserId = response.userId;
@@ -74,7 +76,7 @@ export class SignupComponent {
     }
 
     login() {
-        this.http.post<{ token: string, userId: string, username: string }>('http://localhost:4000/api/users/login', { email: this.signupUser.email, password: this.signupUser.password }).subscribe(response => {
+        this.http.post<{ token: string, userId: string, username: string }>(`${this.apiUrl}/api/users/login`, { email: this.signupUser.email, password: this.signupUser.password }).subscribe(response => {
             // Handle successful login
             console.log('Login successful:', response);
             localStorage.setItem('token', response.token);
