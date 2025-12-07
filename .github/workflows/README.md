@@ -61,7 +61,8 @@ Configure these secrets in your repository settings:
 |-------------|-------------|---------|
 | `AWS_ACCESS_KEY_ID` | AWS IAM access key | `AKIAIOSFODNN7EXAMPLE` |
 | `AWS_SECRET_ACCESS_KEY` | AWS IAM secret key | `wJalrXUtnFEMI/K7MDENG/...` |
-| `MONGO_URI` | MongoDB connection string | `mongodb+srv://user:pass@cluster...` |
+| `DEV_MONGO_URI` | MongoDB connection string for dev | `mongodb+srv://user:pass@cluster.../mindfulminutes-dev` |
+| `PROD_MONGO_URI` | MongoDB connection string for prod | `mongodb+srv://user:pass@cluster.../mindfulminutes-prod` |
 
 **To add secrets:**
 1. Go to repository Settings → Secrets and variables → Actions
