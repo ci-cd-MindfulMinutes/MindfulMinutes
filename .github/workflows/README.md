@@ -6,57 +6,50 @@ This directory contains GitHub Actions workflows for automated infrastructure pr
 
 ### 1. **infrastructure.yml** - Terraform Infrastructure
 **Triggers:**
-- Push to `main` branch with changes in `terraform/` directory
+- Push to `dev` or `main` branch with changes in `terraform/` directory
 - Manual trigger via `workflow_dispatch`
 
 **What it does:**
+- Automatically detects environment based on branch (dev/main)
 - Initializes Terraform
 - Selects appropriate workspace (dev/prod)
 - Plans and applies infrastructure changes
-- Outputs infrastructure details (EC2 IPs, CloudFront URLs, etc.)
+- Outputs infrastructure details in workflow logs
 
-**Environment:** Configurable via manual trigger (default: dev)
-
----
-
-### 2. **capture-outputs.yml** - Capture Terraform Outputs
-**Triggers:**
-- Runs after `infrastructure.yml` completes successfully
-
-**What it does:**
-- Extracts Terraform outputs (backend IP, S3 bucket, CloudFront URL/ID)
-- Displays outputs in workflow logs
-- Makes outputs available for deployment workflows
+**Environment:** Auto-detected from branch
 
 ---
 
-### 3. **deploy-frontend.yml** - Frontend Deployment
+### 2. **deploy-frontend.yml** - Frontend Deployment
 **Triggers:**
-- Push to `main` branch with changes in `frontend/` directory
+- Push to `dev` or `main` branch with changes in `frontend/` directory
 - Manual trigger via `workflow_dispatch`
 
 **What it does:**
+- Automatically detects environment based on branch
 - Installs Node.js dependencies
 - Builds Angular application for production
 - Deploys static files to S3
+- Queries AWS for CloudFront distribution
 - Invalidates CloudFront cache for immediate updates
 
-**Environment:** Configurable via manual trigger (default: dev)
+**Environment:** Auto-detected from branch
 
 ---
 
-### 4. **deploy-backend.yml** - Backend Deployment
+### 3. **deploy-backend.yml** - Backend Deployment
 **Triggers:**
-- Push to `main` branch with changes in `backend/` directory
+- Push to `dev` or `main` branch with changes in `backend/` directory
 - Manual trigger via `workflow_dispatch`
 
 **What it does:**
+- Automatically detects environment based on branch
 - Builds Docker image for backend
 - Pushes image to Amazon ECR
-- Retrieves backend EC2 instance IP
+- Queries AWS for backend EC2 instance IP
 - Prepares deployment to EC2
 
-**Environment:** Configurable via manual trigger (default: dev)
+**Environment:** Auto-detected from branch
 
 ---
 
@@ -81,18 +74,19 @@ Configure these secrets in your repository settings:
 
 **Initial Infrastructure Setup:**
 ```
-1. infrastructure.yml (manual trigger)
-   ↓
-2. capture-outputs.yml (automatic)
+Push to dev/main with terraform/ changes → infrastructure.yml
 ```
 
 **Application Deployment:**
 ```
-Frontend changes:
-  push to frontend/ → deploy-frontend.yml
+Push to dev/main with frontend/ changes → deploy-frontend.yml
+Push to dev/main with backend/ changes → deploy-backend.yml
+```
 
-Backend changes:
-  push to backend/ → deploy-backend.yml
+**Branch-based deployment:**
+```
+dev branch  → Deploys to dev environment
+main branch → Deploys to prod environment
 ```
 
 ---
@@ -123,8 +117,8 @@ This prevents unnecessary deployments and saves build minutes.
 
 ## Workflow Dependencies
 
-- **capture-outputs.yml** depends on **infrastructure.yml**
-- Deployment workflows are independent
+- All workflows are independent and self-contained
+- Deployment workflows query AWS directly for resource details
 - All workflows require AWS credentials
 
 ---
