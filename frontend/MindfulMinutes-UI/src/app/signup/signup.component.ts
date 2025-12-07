@@ -53,7 +53,7 @@ export class SignupComponent {
     }
 
     signup() {
-        this.http.post<{ message: string, username: string, userId: string }>('http://localhost:3000/api/users/register', this.signupUser).subscribe(response => {
+        this.http.post<{ message: string, username: string, userId: string }>('http://localhost:4000/api/users/register', this.signupUser).subscribe(response => {
             // Handle successful signup
             console.log('signup successful: ', response);
             this.signedupUserId = response.userId;
@@ -74,7 +74,7 @@ export class SignupComponent {
     }
 
     login() {
-        this.http.post<{ token: string, userId: string, username: string }>('http://localhost:3000/api/users/login', { email: this.signupUser.email, password: this.signupUser.password }).subscribe(response => {
+        this.http.post<{ token: string, userId: string, username: string }>('http://localhost:4000/api/users/login', { email: this.signupUser.email, password: this.signupUser.password }).subscribe(response => {
             // Handle successful login
             console.log('Login successful:', response);
             localStorage.setItem('token', response.token);

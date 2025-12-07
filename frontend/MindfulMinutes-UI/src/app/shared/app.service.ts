@@ -20,9 +20,9 @@ export class AppService {
 
   getDateCount(userId: string): Observable<number> {
     return forkJoin({
-      quotes: this.http.get<any[]>(`http://localhost:3000/api/completedQuotes/${userId}`),
-      breathing: this.http.get<any[]>(`http://localhost:3000/api/completedBreathingExercises/${userId}`),
-      journals: this.http.get<any[]>(`http://localhost:3000/api/completedJournal/${userId}`)
+      quotes: this.http.get<any[]>(`http://localhost:4000/api/completedQuotes/${userId}`),
+      breathing: this.http.get<any[]>(`http://localhost:4000/api/completedBreathingExercises/${userId}`),
+      journals: this.http.get<any[]>(`http://localhost:4000/api/completedJournal/${userId}`)
     }).pipe(
       map(({ quotes, breathing, journals }) => {
         // Convert dates into day (DD) sets for fast lookup
@@ -61,9 +61,9 @@ export class AppService {
 
   getLastCompletedDate(userId: string): Observable<Date | null> {
     return forkJoin({
-      quotes: this.http.get<any[]>(`http://localhost:3000/api/completedQuotes/${userId}`),
-      breathing: this.http.get<any[]>(`http://localhost:3000/api/completedBreathingExercises/${userId}`),
-      journals: this.http.get<any[]>(`http://localhost:3000/api/completedJournal/${userId}`)
+      quotes: this.http.get<any[]>(`http://localhost:4000/api/completedQuotes/${userId}`),
+      breathing: this.http.get<any[]>(`http://localhost:4000/api/completedBreathingExercises/${userId}`),
+      journals: this.http.get<any[]>(`http://localhost:4000/api/completedJournal/${userId}`)
     }).pipe(
       map(({ quotes, breathing, journals }) => {
         // Convert dates into day (DD) sets for fast lookup
@@ -82,38 +82,38 @@ export class AppService {
   }
   
   getQuote(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/quotes/');
+    return this.http.get('http://localhost:4000/api/quotes/');
   }
   getBreathingExercise(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/breathingExercise/');
+    return this.http.get('http://localhost:4000/api/breathingExercise/');
   }
   postJournal(user_id: string, journalData: any): Observable<any> {
-    return this.http.post(`http://localhost:3000/api/completedJournal/${user_id}`, journalData);
+    return this.http.post(`http://localhost:4000/api/completedJournal/${user_id}`, journalData);
   }
   getCompletedQuotes(user_id: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/completedQuotes/${user_id}`);
+    return this.http.get(`http://localhost:4000/api/completedQuotes/${user_id}`);
   }
   getCompletedBreathingExercises(user_id: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/completedBreathingExercises/${user_id}`);
+    return this.http.get(`http://localhost:4000/api/completedBreathingExercises/${user_id}`);
   }
   getCompletedJournals(user_id: string): Observable<any> {
-    return this.http.get(`http://localhost:3000/api/completedJournal/${user_id}`);
+    return this.http.get(`http://localhost:4000/api/completedJournal/${user_id}`);
   }
   markQuoteAsCompleted(user_id: string, quoteId: string, quote: string): Observable<any> {
-    return this.http.post(`http://localhost:3000/api/completedQuotes/${user_id}`, { quoteId, quote }).pipe(
+    return this.http.post(`http://localhost:4000/api/completedQuotes/${user_id}`, { quoteId, quote }).pipe(
       tap(response => console.log(response, "-- Quote marked as completed")));
   }
   markBreathingExerciseAsCompleted(user_id: string, exercise_title: string, videoUrl: string): Observable<any> {
-    return this.http.post(`http://localhost:3000/api/completedBreathingExercises/${user_id}`, {exercise_title, videoUrl }).pipe(
+    return this.http.post(`http://localhost:4000/api/completedBreathingExercises/${user_id}`, {exercise_title, videoUrl }).pipe(
       tap(response => console.log(response, "-- Breathing exercise marked as completed")));
   }
   deleteAllCompletedQuotes(user_id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/api/completedQuotes/${user_id}`);
+    return this.http.delete(`http://localhost:4000/api/completedQuotes/${user_id}`);
   }
   deleteAllCompletedBreathingExercises(user_id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/api/completedBreathingExercises/${user_id}`);
+    return this.http.delete(`http://localhost:4000/api/completedBreathingExercises/${user_id}`);
   }
   deleteAllCompletedJournals(user_id: string): Observable<any> {
-    return this.http.delete(`http://localhost:3000/api/completedJournal/${user_id}`);
+    return this.http.delete(`http://localhost:4000/api/completedJournal/${user_id}`);
   }
 }
