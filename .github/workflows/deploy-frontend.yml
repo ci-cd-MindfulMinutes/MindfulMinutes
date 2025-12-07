@@ -48,16 +48,44 @@ jobs:
         working-directory: frontend/MindfulMinutes-UI
         run: npm ci
 
-      - name: Build Angular app
-        working-directory: frontend/MindfulMinutes-UI
-        run: npm run build --production
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Get Backend EC2 IP
+        id: get_backend_ip
+        run: |
+          BACKEND_IP=$(aws ec2 describe-addresses \
+            --filters "Name=tag:Name,Values=mindfulminutes-${{ steps.env.outputs.environment }}-backend-eip" \
+            --query "Addresses[0].PublicIp" \
+            --output text)
+          echo "backend_ip=${BACKEND_IP}" >> $GITHUB_OUTPUT
+          echo "Backend IP: ${BACKEND_IP}"
+
+      - name: Determine Build Configuration
+        id: build_config
+        run: |
+          if [[ "${{ steps.env.outputs.environment }}" == "prod" ]]; then
+            echo "config=production" >> $GITHUB_OUTPUT
+            echo "env_file=environment.production.ts" >> $GITHUB_OUTPUT
+          else
+            echo "config=dev-aws" >> $GITHUB_OUTPUT
+            echo "env_file=environment.development.ts" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Inject Backend URL into Environment File
+        working-directory: frontend/MindfulMinutes-UI/src/environments
+        run: |
+          sed -i "s|API_URL_PLACEHOLDER|http://${{ steps.get_backend_ip.outputs.backend_ip }}:5000|g" ${{ steps.build_config.outputs.env_file }}
+          echo "Updated ${{ steps.build_config.outputs.env_file }} with backend URL"
+          cat ${{ steps.build_config.outputs.env_file }}
+
+      - name: Build Angular app
+        working-directory: frontend/MindfulMinutes-UI
+        run: npm run build -- --configuration=${{ steps.build_config.outputs.config }}
 
       - name: Get S3 bucket name
         id: get_bucket
