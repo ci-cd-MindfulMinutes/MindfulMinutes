@@ -79,7 +79,7 @@ jobs:
       - name: Inject Backend URL into Environment File
         working-directory: frontend/MindfulMinutes-UI/src/environments
         run: |
-          sed -i "s|API_URL_PLACEHOLDER|https://${{ steps.get_backend_ip.outputs.backend_ip }}:3000|g" ${{ steps.build_config.outputs.env_file }}
+          sed -i "s|API_URL_PLACEHOLDER|https://${{ steps.get_backend_ip.outputs.backend_ip }}|g" ${{ steps.build_config.outputs.env_file }}
           echo "Updated ${{ steps.build_config.outputs.env_file }} with backend URL"
           cat ${{ steps.build_config.outputs.env_file }}
 
