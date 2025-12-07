@@ -3,19 +3,11 @@ name: Deploy Frontend
 on:
   push:
     branches:
+      - dev
       - main
     paths:
       - 'frontend/**'
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy (dev or prod)'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-          - dev
-          - prod
 
 jobs:
   deploy-frontend:
@@ -25,6 +17,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Determine Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=prod" >> $GITHUB_OUTPUT
+          else
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -53,8 +54,7 @@ jobs:
       - name: Get S3 bucket name
         id: get_bucket
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          echo "bucket=mindfulminutes-${ENV}-frontend" >> $GITHUB_OUTPUT
+          echo "bucket=mindfulminutes-${{ steps.env.outputs.environment }}-frontend" >> $GITHUB_OUTPUT
 
       - name: Deploy to S3
         run: |
@@ -63,8 +63,7 @@ jobs:
       - name: Get CloudFront distribution ID
         id: get_cloudfront
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName==\`mindfulminutes-${ENV}-frontend.s3.us-east-1.amazonaws.com\`].Id" --output text)
+          DISTRIBUTION_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?Origins.Items[0].DomainName==\`mindfulminutes-${{ steps.env.outputs.environment }}-frontend.s3.us-east-1.amazonaws.com\`].Id" --output text)
           echo "distribution_id=${DISTRIBUTION_ID}" >> $GITHUB_OUTPUT
 
       - name: Invalidate CloudFront cache

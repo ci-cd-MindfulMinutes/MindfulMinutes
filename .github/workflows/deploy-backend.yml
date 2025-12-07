@@ -3,19 +3,11 @@ name: Deploy Backend
 on:
   push:
     branches:
+      - dev
       - main
     paths:
       - 'backend/**'
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy (dev or prod)'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-          - dev
-          - prod
 
 jobs:
   deploy-backend:
@@ -25,6 +17,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Determine Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=prod" >> $GITHUB_OUTPUT
+          else
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          fi
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -39,31 +40,27 @@ jobs:
 
       - name: Create ECR repository if not exists
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          aws ecr describe-repositories --repository-names mindfulminutes-${ENV}-backend || \
-          aws ecr create-repository --repository-name mindfulminutes-${ENV}-backend
+          aws ecr describe-repositories --repository-names mindfulminutes-${{ steps.env.outputs.environment }}-backend || \
+          aws ecr create-repository --repository-name mindfulminutes-${{ steps.env.outputs.environment }}-backend
 
       - name: Build Docker image
         working-directory: backend
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          docker build -t ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:latest .
-          docker tag ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:latest ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:${{ github.sha }}
+          docker build -t ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest .
+          docker tag ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:${{ github.sha }}
 
       - name: Push Docker image to ECR
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          docker push ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:latest
-          docker push ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:${{ github.sha }}
+          docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest
+          docker push ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:${{ github.sha }}
 
       - name: Get Backend EC2 IP
         id: get_ec2
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
           EC2_IP=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=mindfulminutes-${ENV}-backend" "Name=instance-state-name,Values=running" \
+            --filters "Name=tag:Name,Values=mindfulminutes-${{ steps.env.outputs.environment }}-backend" "Name=instance-state-name,Values=running" \
             --query "Reservations[0].Instances[0].PublicIpAddress" \
             --output text)
           echo "ec2_ip=${EC2_IP}" >> $GITHUB_OUTPUT
@@ -74,14 +71,12 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
           echo "Deploying to EC2: ${EC2_IP}"
           # Note: Actual EC2 deployment would require SSH access
           # This is a placeholder showing the deployment flow
-          echo "Would deploy ${ECR_REGISTRY}/mindfulminutes-${ENV}-backend:latest to ${EC2_IP}"
+          echo "Would deploy ${ECR_REGISTRY}/mindfulminutes-${{ steps.env.outputs.environment }}-backend:latest to ${EC2_IP}"
 
       - name: Deployment Success
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          echo "Backend deployed successfully to environment: ${ENV}"
+          echo "Backend deployed successfully to environment: ${{ steps.env.outputs.environment }}"
           echo "EC2 IP: ${{ steps.get_ec2.outputs.ec2_ip }}"

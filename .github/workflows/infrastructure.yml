@@ -3,19 +3,11 @@ name: Terraform Infrastructure
 on:
   push:
     branches:
+      - dev
       - main
     paths:
       - 'terraform/**'
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy (dev or prod)'
-        required: true
-        default: 'dev'
-        type: choice
-        options:
-          - dev
-          - prod
 
 jobs:
   terraform:
@@ -42,17 +34,24 @@ jobs:
         working-directory: ./terraform
         run: terraform init
 
+      - name: Determine Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=prod" >> $GITHUB_OUTPUT
+          else
+            echo "environment=dev" >> $GITHUB_OUTPUT
+          fi
+
       - name: Select Terraform Workspace
         working-directory: ./terraform
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          terraform workspace select $ENV || terraform workspace new $ENV
+          terraform workspace select ${{ steps.env.outputs.environment }} || terraform workspace new ${{ steps.env.outputs.environment }}
 
       - name: Terraform Plan
         working-directory: ./terraform
         run: |
-          ENV=${{ github.event.inputs.environment || 'dev' }}
-          terraform plan -var-file="${ENV}.tfvars" -out=tfplan
+          terraform plan -var-file="${{ steps.env.outputs.environment }}.tfvars" -out=tfplan
 
       - name: Terraform Apply
         working-directory: ./terraform
