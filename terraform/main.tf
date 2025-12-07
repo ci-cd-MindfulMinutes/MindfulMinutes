@@ -112,7 +112,10 @@ resource "aws_instance" "backend" {
               
               # Install necessary packages
               yum update -y
-              yum install -y docker nginx openssl
+              # --- CORRECT NGINX INSTALLATION FOR AMAZON LINUX 2 ---
+              sudo amazon-linux-extras install nginx1 -y
+              yum install -y docker openssl
+              # ---------------------------------------------------
 
               # Docker setup
               systemctl start docker
