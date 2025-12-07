@@ -17,7 +17,6 @@ import { count, Observable } from 'rxjs';
     HeaderComponent,
     CustomModule,
     JsonPipe,
-    HttpClientModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
