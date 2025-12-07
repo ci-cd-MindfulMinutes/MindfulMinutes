@@ -21,14 +21,6 @@ resource "aws_security_group" "backend_sg" {
     description = "Backend API"
   }
 
-  # Allow Nginx HTTPS port (443)
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "HTTPS/Nginx"
-  }
 
   # Allow all outbound traffic
   egress {
@@ -109,52 +101,21 @@ resource "aws_instance" "backend" {
 
   user_data = <<-EOF
               #!/bin/bash
-              
-              # ... (Install & SSL Generation commands are fine) ...
-              
-              # Variables are correctly defined in the Bash script above:
-              # IP_ADDRESS=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
-              # CERT_DIR="/etc/nginx/ssl"
+              # Update system
+              yum update -y
 
-              # --- NGINX CONFIGURATION ---
-              
-              sudo tee /etc/nginx/conf.d/api.conf > /dev/null <<'EOT_CONFIG'
-# Redirect HTTP to HTTPS
-server {
-    listen 80;
-    # Terraform Escape: $${IP_ADDRESS} passes $IP_ADDRESS to Bash
-    server_name $${IP_ADDRESS}; 
-    # Nginx Variable Escape: \\$host passes \$host to Nginx config file
-    return 301 https://\\$host\\$request_uri; 
-}
+              # Install Docker
+              amazon-linux-extras install docker -y
+              systemctl start docker
+              systemctl enable docker
+              usermod -aG docker ec2-user
 
-# HTTPS Listener with Self-Signed Cert
-server {
-    listen 443 ssl;
-    server_name $${IP_ADDRESS};
+              # Install Docker Compose
+              curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              chmod +x /usr/local/bin/docker-compose
 
-    # Terraform Escape: $${CERT_DIR} passes $CERT_DIR to Bash
-    ssl_certificate     $${CERT_DIR}/selfsigned.crt; 
-    ssl_certificate_key $${CERT_DIR}/selfsigned.key;
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
-    
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-        
-        # Nginx Variable Escapes: \\$host, \\$remote_addr, etc.
-        proxy_set_header Host \\$host;
-        proxy_set_header X-Real-IP \\$remote_addr;
-        proxy_set_header X-Forwarded-For \\$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \\$scheme;
-    }
-}
-EOT_CONFIG
-
-              # --- 4. START NGINX ---
-              systemctl start nginx
-              systemctl enable nginx
+              # Backend application will run on port 3000
+              # API Gateway will handle HTTPS and proxy to this port
               EOF
 
   tags = {
@@ -272,5 +233,93 @@ resource "aws_cloudfront_distribution" "frontend" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-frontend-cdn"
+  }
+}
+
+# API Gateway REST API
+resource "aws_api_gateway_rest_api" "backend_api" {
+  name        = "${var.project_name}-${var.environment}-backend-api"
+  description = "API Gateway for backend EC2 instance"
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-backend-api"
+  }
+}
+
+# API Gateway Resource - Proxy resource to catch all paths
+resource "aws_api_gateway_resource" "proxy" {
+  rest_api_id = aws_api_gateway_rest_api.backend_api.id
+  parent_id   = aws_api_gateway_rest_api.backend_api.root_resource_id
+  path_part   = "{proxy+}"
+}
+
+# API Gateway Method - ANY method for proxy resource
+resource "aws_api_gateway_method" "proxy" {
+  rest_api_id   = aws_api_gateway_rest_api.backend_api.id
+  resource_id   = aws_api_gateway_resource.proxy.id
+  http_method   = "ANY"
+  authorization = "NONE"
+}
+
+# API Gateway Method - ANY method for root resource
+resource "aws_api_gateway_method" "proxy_root" {
+  rest_api_id   = aws_api_gateway_rest_api.backend_api.id
+  resource_id   = aws_api_gateway_rest_api.backend_api.root_resource_id
+  http_method   = "ANY"
+  authorization = "NONE"
+}
+
+# API Gateway Integration - HTTP proxy to EC2
+resource "aws_api_gateway_integration" "proxy" {
+  rest_api_id = aws_api_gateway_rest_api.backend_api.id
+  resource_id = aws_api_gateway_resource.proxy.id
+  http_method = aws_api_gateway_method.proxy.http_method
+
+  type                    = "HTTP_PROXY"
+  integration_http_method = "ANY"
+  uri                     = "http://${aws_eip.backend_eip.public_ip}:3000/{proxy}"
+
+  request_parameters = {
+    "integration.request.path.proxy" = "method.request.path.proxy"
+  }
+}
+
+# API Gateway Integration - HTTP proxy to EC2 root
+resource "aws_api_gateway_integration" "proxy_root" {
+  rest_api_id = aws_api_gateway_rest_api.backend_api.id
+  resource_id = aws_api_gateway_rest_api.backend_api.root_resource_id
+  http_method = aws_api_gateway_method.proxy_root.http_method
+
+  type                    = "HTTP_PROXY"
+  integration_http_method = "ANY"
+  uri                     = "http://${aws_eip.backend_eip.public_ip}:3000/"
+}
+
+# API Gateway Deployment
+resource "aws_api_gateway_deployment" "backend" {
+  rest_api_id = aws_api_gateway_rest_api.backend_api.id
+
+  depends_on = [
+    aws_api_gateway_integration.proxy,
+    aws_api_gateway_integration.proxy_root,
+  ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# API Gateway Stage
+resource "aws_api_gateway_stage" "backend" {
+  deployment_id = aws_api_gateway_deployment.backend.id
+  rest_api_id   = aws_api_gateway_rest_api.backend_api.id
+  stage_name    = var.environment
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-api-stage"
   }
 }
