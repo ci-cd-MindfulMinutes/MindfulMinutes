@@ -110,59 +110,44 @@ resource "aws_instance" "backend" {
   user_data = <<-EOF
               #!/bin/bash
               
-              # --- 1. INSTALLATION & SETUP ---
-              yum update -y
+              # ... (Install & SSL Generation commands are fine) ...
               
-              # Install Nginx (Amazon Linux 2 fix), Docker, OpenSSL
-              sudo amazon-linux-extras install nginx1 -y
-              yum install -y docker openssl
-              
-              systemctl start docker
-              systemctl enable docker
-              usermod -a -G docker ec2-user
-              
-              # --- 2. SELF-SIGNED SSL GENERATION ---
-              CERT_DIR="/etc/nginx/ssl"
-              
-              # FIX: Ensure directory exists (This was the problem area)
-              mkdir -p $CERT_DIR
-              
-              IP_ADDRESS=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
-              
-              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                -keyout $CERT_DIR/selfsigned.key \
-                -out $CERT_DIR/selfsigned.crt \
-                -subj "/C=US/ST=State/L=City/O=Assignment/CN=$IP_ADDRESS"
+              # Variables are correctly defined in the Bash script above:
+              # IP_ADDRESS=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+              # CERT_DIR="/etc/nginx/ssl"
 
-              # --- 3. NGINX CONFIGURATION (Using robust 'tee') ---
+              # --- NGINX CONFIGURATION ---
               
-              # FIX: Use tee command to reliably write config file contents
               sudo tee /etc/nginx/conf.d/api.conf > /dev/null <<'EOT_CONFIG'
 # Redirect HTTP to HTTPS
 server {
     listen 80;
-    server_name ${IP_ADDRESS};
-    return 301 https://\$host\$request_uri;
+    # Terraform Escape: $${IP_ADDRESS} passes $IP_ADDRESS to Bash
+    server_name $${IP_ADDRESS}; 
+    # Nginx Variable Escape: \\$host passes \$host to Nginx config file
+    return 301 https://\\$host\\$request_uri; 
 }
 
 # HTTPS Listener with Self-Signed Cert
 server {
     listen 443 ssl;
-    server_name ${IP_ADDRESS};
+    server_name $${IP_ADDRESS};
 
-    ssl_certificate     ${CERT_DIR}/selfsigned.crt;
-    ssl_certificate_key ${CERT_DIR}/selfsigned.key;
+    # Terraform Escape: $${CERT_DIR} passes $CERT_DIR to Bash
+    ssl_certificate     $${CERT_DIR}/selfsigned.crt; 
+    ssl_certificate_key $${CERT_DIR}/selfsigned.key;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
     
     location / {
-        # Proxy to your backend running on port 3000
         proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
+        
+        # Nginx Variable Escapes: \\$host, \\$remote_addr, etc.
+        proxy_set_header Host \\$host;
+        proxy_set_header X-Real-IP \\$remote_addr;
+        proxy_set_header X-Forwarded-For \\$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \\$scheme;
     }
 }
 EOT_CONFIG
