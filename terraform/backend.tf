@@ -4,6 +4,7 @@
 # - Dev: env:/dev/terraform.tfstate
 # - Prod: env:/prod/terraform.tfstate
 
+
 terraform {
   backend "s3" {
     bucket         = "mindfulminutes-terraform-state"
