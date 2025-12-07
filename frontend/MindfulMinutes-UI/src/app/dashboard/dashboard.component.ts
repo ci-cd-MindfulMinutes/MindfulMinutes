@@ -98,7 +98,7 @@ export class DashboardComponent {
     let apiCall;
     if (this.day_count >= 30) {
       this.popupTitle = 'Already Completed';
-      this.popupContent = 'You have completed the 30-day journey. Well done!';
+      this.popupContent = 'You have completed the 30-day journey. Well done !!';
       this.isPopupOpen = true;
       return;
     }
