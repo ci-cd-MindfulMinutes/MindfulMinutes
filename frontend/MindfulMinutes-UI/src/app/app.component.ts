@@ -10,5 +10,5 @@ import { SignupComponent } from './signup/signup.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'MindfulMinutes-UI-Dev';
+  title = 'MindfulMinutes-UI';
 }
