@@ -21,6 +21,15 @@ resource "aws_security_group" "backend_sg" {
     description = "Backend API"
   }
 
+  # Allow Nginx HTTPS port (443)
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTPS/Nginx"
+  }
+
   # Allow all outbound traffic
   egress {
     from_port   = 0
@@ -100,11 +109,64 @@ resource "aws_instance" "backend" {
 
   user_data = <<-EOF
               #!/bin/bash
+              
+              # Install necessary packages
               yum update -y
-              yum install -y docker
+              yum install -y docker nginx openssl
+
+              # Docker setup
               systemctl start docker
               systemctl enable docker
               usermod -a -G docker ec2-user
+              
+              # --- Self-Signed SSL Generation ---
+              CERT_DIR="/etc/nginx/ssl"
+              sudo mkdir -p $CERT_DIR
+              
+              # Generate certificate and key, using the EIP for Common Name
+              IP_ADDRESS=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+              
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                -keyout $CERT_DIR/selfsigned.key \
+                -out $CERT_DIR/selfsigned.crt \
+                -subj "/C=US/ST=State/L=City/O=Assignment/CN=$IP_ADDRESS"
+
+              # --- Nginx Configuration ---
+              sudo cat > /etc/nginx/conf.d/api.conf <<- EOL
+              
+              # Redirect HTTP to HTTPS
+              server {
+                  listen 80;
+                  server_name $IP_ADDRESS;
+                  return 301 https://\$host\$request_uri;
+              }
+
+              # HTTPS Listener with Self-Signed Cert
+              server {
+                  listen 443 ssl;
+                  server_name $IP_ADDRESS;
+
+                  ssl_certificate     $CERT_DIR/selfsigned.crt;
+                  ssl_certificate_key $CERT_DIR/selfsigned.key;
+
+                  # Standard security headers
+                  ssl_protocols TLSv1.2 TLSv1.3;
+                  ssl_ciphers HIGH:!aNULL:!MD5;
+                  
+                  location / {
+                      # Proxy to your backend running on port 3000
+                      proxy_pass http://127.0.0.1:3000;
+                      proxy_set_header Host \$host;
+                      proxy_set_header X-Real-IP \$remote_addr;
+                      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                      proxy_set_header X-Forwarded-Proto \$scheme;
+                  }
+              }
+              EOL
+              
+              # Start Nginx service
+              systemctl start nginx
+              systemctl enable nginx
               EOF
 
   tags = {
