@@ -110,23 +110,23 @@ resource "aws_instance" "backend" {
   user_data = <<-EOF
               #!/bin/bash
               
-              # Install necessary packages
+              # --- 1. INSTALLATION & SETUP ---
               yum update -y
-              # --- CORRECT NGINX INSTALLATION FOR AMAZON LINUX 2 ---
+              
+              # Install Nginx (Amazon Linux 2 fix), Docker, OpenSSL
               sudo amazon-linux-extras install nginx1 -y
               yum install -y docker openssl
-              # ---------------------------------------------------
-
-              # Docker setup
+              
               systemctl start docker
               systemctl enable docker
               usermod -a -G docker ec2-user
               
-              # --- Self-Signed SSL Generation ---
+              # --- 2. SELF-SIGNED SSL GENERATION ---
               CERT_DIR="/etc/nginx/ssl"
-              sudo mkdir -p $CERT_DIR
               
-              # Generate certificate and key, using the EIP for Common Name
+              # FIX: Ensure directory exists (This was the problem area)
+              mkdir -p $CERT_DIR
+              
               IP_ADDRESS=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
               
               openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
@@ -134,40 +134,40 @@ resource "aws_instance" "backend" {
                 -out $CERT_DIR/selfsigned.crt \
                 -subj "/C=US/ST=State/L=City/O=Assignment/CN=$IP_ADDRESS"
 
-              # --- Nginx Configuration ---
-              sudo cat > /etc/nginx/conf.d/api.conf <<- EOL
+              # --- 3. NGINX CONFIGURATION (Using robust 'tee') ---
               
-              # Redirect HTTP to HTTPS
-              server {
-                  listen 80;
-                  server_name $IP_ADDRESS;
-                  return 301 https://\$host\$request_uri;
-              }
+              # FIX: Use tee command to reliably write config file contents
+              sudo tee /etc/nginx/conf.d/api.conf > /dev/null <<'EOT_CONFIG'
+# Redirect HTTP to HTTPS
+server {
+    listen 80;
+    server_name ${IP_ADDRESS};
+    return 301 https://\$host\$request_uri;
+}
 
-              # HTTPS Listener with Self-Signed Cert
-              server {
-                  listen 443 ssl;
-                  server_name $IP_ADDRESS;
+# HTTPS Listener with Self-Signed Cert
+server {
+    listen 443 ssl;
+    server_name ${IP_ADDRESS};
 
-                  ssl_certificate     $CERT_DIR/selfsigned.crt;
-                  ssl_certificate_key $CERT_DIR/selfsigned.key;
+    ssl_certificate     ${CERT_DIR}/selfsigned.crt;
+    ssl_certificate_key ${CERT_DIR}/selfsigned.key;
 
-                  # Standard security headers
-                  ssl_protocols TLSv1.2 TLSv1.3;
-                  ssl_ciphers HIGH:!aNULL:!MD5;
-                  
-                  location / {
-                      # Proxy to your backend running on port 3000
-                      proxy_pass http://127.0.0.1:3000;
-                      proxy_set_header Host \$host;
-                      proxy_set_header X-Real-IP \$remote_addr;
-                      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto \$scheme;
-                  }
-              }
-              EOL
-              
-              # Start Nginx service
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    
+    location / {
+        # Proxy to your backend running on port 3000
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOT_CONFIG
+
+              # --- 4. START NGINX ---
               systemctl start nginx
               systemctl enable nginx
               EOF
