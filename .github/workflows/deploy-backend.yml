@@ -79,7 +79,7 @@ jobs:
         env:
           EC2_IP: ${{ steps.get_ec2.outputs.ec2_ip }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
+          MONGO_URI: ${{ steps.env.outputs.environment == 'prod' && secrets.PROD_MONGO_URI || secrets.DEV_MONGO_URI }}
         run: |
           echo "Deploying to EC2: ${EC2_IP}"
           # Note: Actual EC2 deployment would require SSH access
