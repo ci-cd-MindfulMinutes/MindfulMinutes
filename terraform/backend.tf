@@ -11,5 +11,6 @@ terraform {
     region         = "us-east-1"
     dynamodb_table = "mindfulminutes-terraform-state-lock"
     encrypt        = true
+    profile= "default"
   }
 }
