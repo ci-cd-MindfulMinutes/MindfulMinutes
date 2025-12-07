@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
         if (!quote_text) return res.status(400).json({ message: 'Quote text is required' });
 
         const newQuote = new Quote({
-            user_id: req.user.id,
+            user_id: req.user?.id || null,
             quote_text,
             status: 'Pending'
         });
@@ -53,10 +53,6 @@ router.put('/:id', async (req, res) => {
         let quote = await Quote.findById(req.params.id);
 
         if (!quote) return res.status(404).json({ message: 'Quote not found' });
-
-        if (quote.user_id !== req.user.id) {
-            return res.status(403).json({ message: 'Unauthorized to edit this quote' });
-        }
 
         quote.quote_text = quote_text || quote.quote_text;
         quote.status = status || quote.status;
@@ -77,10 +73,6 @@ router.delete('/:id', async (req, res) => {
         const quote = await Quote.findById(req.params.id);
 
         if (!quote) return res.status(404).json({ message: 'Quote not found' });
-
-        if (quote.user_id !== req.user.id) {
-            return res.status(403).json({ message: 'Unauthorized to delete this quote' });
-        }
 
         await quote.deleteOne();
         res.json({ message: 'Quote deleted successfully' });
