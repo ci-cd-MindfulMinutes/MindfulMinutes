@@ -14,8 +14,8 @@ resource "aws_security_group" "backend_sg" {
 
   # Allow backend API port
   ingress {
-    from_port   = 5000
-    to_port     = 5000
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
     description = "Backend API"
@@ -149,7 +149,7 @@ resource "aws_cloudfront_distribution" "frontend" {
 
   default_cache_behavior {
     target_origin_id       = "S3-${aws_s3_bucket.frontend.id}"
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = var.environment == "dev" ? "allow-all" : "redirect-to-https"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
 
