@@ -138,23 +138,9 @@ jobs:
           tar -czf deploy-package.tar.gz -C deploy-package .
 
       - name: Upload deployment package to EC2
-        env:
-          INSTANCE_ID: ${{ steps.get_ec2.outputs.instance_id }}
         run: |
           # Copy deployment package to EC2 via S3
           aws s3 cp deploy-package.tar.gz s3://mindfulminutes-${{ steps.env.outputs.environment }}-frontend/deploy/deploy-package.tar.gz
-
-          # Download and extract on EC2
-          aws ssm send-command \
-            --instance-ids ${INSTANCE_ID} \
-            --document-name "AWS-RunShellScript" \
-            --parameters "commands=[
-              'cd /home/ec2-user',
-              'aws s3 cp s3://mindfulminutes-${{ steps.env.outputs.environment }}-frontend/deploy/deploy-package.tar.gz .',
-              'tar -xzf deploy-package.tar.gz',
-              'rm deploy-package.tar.gz'
-            ]" \
-            --output text
 
       - name: Deploy to EC2
         env:
@@ -172,20 +158,29 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters "commands=[
               'cd /home/ec2-user',
+              'echo \"==================== DOWNLOADING DEPLOYMENT PACKAGE ====================\"',
+              'aws s3 cp s3://mindfulminutes-${ENVIRONMENT}-frontend/deploy/deploy-package.tar.gz .',
+              'echo \"==================== EXTRACTING DEPLOYMENT PACKAGE ====================\"',
+              'tar -xzf deploy-package.tar.gz',
+              'rm deploy-package.tar.gz',
+              'echo \"==================== VERIFYING EXTRACTED FILES ====================\"',
+              'ls -la',
+              'ls -la monitoring/ || echo \"monitoring directory not found\"',
+              'ls -la coverage/ || echo \"coverage directory not found\"',
               'export AWS_REGION=${AWS_REGION}',
               'export ECR_REGISTRY=${ECR_REGISTRY}',
               'export ENVIRONMENT=${ENVIRONMENT}',
               'export MONGO_URI=\"${MONGO_URI}\"',
               'export JWT_SECRET=\"${JWT_SECRET}\"',
-              'echo \"Logging into ECR...\"',
+              'echo \"==================== LOGGING INTO ECR ====================\"',
               'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}',
-              'echo \"Stopping existing containers...\"',
+              'echo \"==================== STOPPING EXISTING CONTAINERS ====================\"',
               'docker-compose -f docker-compose.ec2.yml down || true',
-              'echo \"Pulling backend image from ECR...\"',
+              'echo \"==================== PULLING BACKEND IMAGE FROM ECR ====================\"',
               'docker-compose -f docker-compose.ec2.yml pull backend || echo \"Backend pull failed, continuing...\"',
-              'echo \"Starting all containers...\"',
+              'echo \"==================== STARTING ALL CONTAINERS ====================\"',
               'docker-compose -f docker-compose.ec2.yml up -d',
-              'echo \"Waiting for containers to start...\"',
+              'echo \"==================== WAITING FOR CONTAINERS TO START ====================\"',
               'sleep 10',
               'echo \"==================== CONTAINER STATUS ====================\"',
               'docker ps -a',
