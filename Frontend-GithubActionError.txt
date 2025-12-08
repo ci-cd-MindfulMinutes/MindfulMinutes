@@ -1,0 +1,713 @@
+Run npm run test:ci
+
+> mindful-minutes-ui@0.0.0 test:ci
+> ng test --watch=false --browsers=ChromeHeadless --code-coverage
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+08 12 2025 06:46:39.007:INFO [karma-server]: Karma v6.4.4 server started at http://localhost:9876/
+08 12 2025 06:46:39.009:INFO [launcher]: Launching browsers ChromeHeadless with concurrency unlimited
+08 12 2025 06:46:39.013:INFO [launcher]: Starting browser ChromeHeadless
+08 12 2025 06:46:46.741:INFO [Chrome Headless 142.0.0.0 (Linux x86_64)]: Connected on socket Cjo4IaWXlCzvhs3pAAAB with id 4844341
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 0 of 51 SUCCESS (0 secs / 0 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 1 of 51 SUCCESS (0 secs / 0.061 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should delete all completed quotes FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedQuotes/123", found none. Requests received are: DELETE http://localhost:3000/api/completedQuotes/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:152:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: DELETE http://localhost:3000/api/completedQuotes/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 2 of 51 (1 FAILED) (0 secs / 0.067 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should mark quote as completed FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedQuotes/123", found none. Requests received are: POST http://localhost:3000/api/completedQuotes/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:136:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: POST http://localhost:3000/api/completedQuotes/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 3 of 51 (2 FAILED) (0 secs / 0.07 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should mark breathing exercise as completed FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedBreathingExercises/123", found none. Requests received are: POST http://localhost:3000/api/completedBreathingExercises/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:144:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: POST http://localhost:3000/api/completedBreathingExercises/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 4 of 51 (3 FAILED) (0 secs / 0.073 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should fetch completed breathing exercises FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedBreathingExercises/123", found none. Requests received are: GET http://localhost:3000/api/completedBreathingExercises/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:120:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: GET http://localhost:3000/api/completedBreathingExercises/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 5 of 51 (4 FAILED) (0 secs / 0.076 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should post journal data FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedJournal/123", found none. Requests received are: POST http://localhost:3000/api/completedJournal/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:104:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: POST http://localhost:3000/api/completedJournal/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 6 of 51 (5 FAILED) (0 secs / 0.079 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should fetch breathing exercises FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/breathingExercise/", found none. Requests received are: GET http://localhost:3000/api/breathingExercise/.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:94:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: GET http://localhost:3000/api/breathingExercise/
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 7 of 51 (6 FAILED) (0 secs / 0.082 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should delete all completed breathing exercises FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedBreathingExercises/123", found none. Requests received are: DELETE http://localhost:3000/api/completedBreathingExercises/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:160:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: DELETE http://localhost:3000/api/completedBreathingExercises/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 8 of 51 (7 FAILED) (0 secs / 0.084 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 9 of 51 (7 FAILED) (0 secs / 0.085 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should delete all completed journals FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedJournal/123", found none. Requests received are: DELETE http://localhost:3000/api/completedJournal/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:168:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: DELETE http://localhost:3000/api/completedJournal/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 10 of 51 (8 FAILED) (0 secs / 0.087 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should fetch completed quotes FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedQuotes/123", found none. Requests received are: GET http://localhost:3000/api/completedQuotes/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:112:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: GET http://localhost:3000/api/completedQuotes/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 11 of 51 (9 FAILED) (0 secs / 0.089 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should fetch quotes FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/quotes/", found none. Requests received are: GET http://localhost:3000/api/quotes/.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:86:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: GET http://localhost:3000/api/quotes/
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 12 of 51 (10 FAILED) (0 secs / 0.092 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should fetch completed journals FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedJournal/123", found none. Requests received are: GET http://localhost:3000/api/completedJournal/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:128:26)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 1: GET http://localhost:3000/api/completedJournal/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 13 of 51 (11 FAILED) (0 secs / 0.094 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should return last completed date FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedQuotes/123", found none. Requests received are: GET http://localhost:3000/api/completedQuotes/123, GET http://localhost:3000/api/completedBreathingExercises/123, GET http://localhost:3000/api/completedJournal/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:74:25)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 3: GET http://localhost:3000/api/completedQuotes/123, GET http://localhost:3000/api/completedBreathingExercises/123, GET http://localhost:3000/api/completedJournal/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 14 of 51 (12 FAILED) (0 secs / 0.097 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64) AppService should calculate streak correctly (getDateCount) FAILED
+	Error: Expected one matching request for criteria "Match URL: http://localhost:4000/api/completedQuotes/123", found none. Requests received are: GET http://localhost:3000/api/completedQuotes/123, GET http://localhost:3000/api/completedBreathingExercises/123, GET http://localhost:3000/api/completedJournal/123.
+	    at HttpClientTestingBackend.expectOne (node_modules/@angular/common/fesm2022/http/testing.mjs:274:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:51:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+	Error: Expected no open requests, found 3: GET http://localhost:3000/api/completedQuotes/123, GET http://localhost:3000/api/completedBreathingExercises/123, GET http://localhost:3000/api/completedJournal/123
+	    at HttpClientTestingBackend.verify (node_modules/@angular/common/fesm2022/http/testing.mjs:302:19)
+	    at UserContext.apply (src/app/shared/app.service.spec.ts:35:14)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:369:28)
+	    at ProxyZoneSpec.onInvoke (node_modules/zone.js/fesm2015/zone-testing.js:2082:39)
+	    at _ZoneDelegate.invoke (node_modules/zone.js/fesm2015/zone.js:368:34)
+	    at ZoneImpl.run (node_modules/zone.js/fesm2015/zone.js:111:43)
+	    at runInTestZone (node_modules/zone.js/fesm2015/zone-testing.js:216:38)
+	    at UserContext.<anonymous> (node_modules/zone.js/fesm2015/zone-testing.js:234:32)
+	    at <Jasmine>
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 15 of 51 (13 FAILED) (0 secs / 0.1 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 16 of 51 (13 FAILED) (0 secs / 0.125 secs)
+08 12 2025 06:46:48.288:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.288:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.289:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.290:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.290:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 17 of 51 (13 FAILED) (0 secs / 0.129 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 18 of 51 (13 FAILED) (0 secs / 0.132 secs)
+08 12 2025 06:46:48.301:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.301:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.302:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.303:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.304:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 19 of 51 (13 FAILED) (0 secs / 0.137 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 20 of 51 (13 FAILED) (0 secs / 0.14 secs)
+08 12 2025 06:46:48.312:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.313:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.313:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.313:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.314:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 21 of 51 (13 FAILED) (0 secs / 0.144 secs)
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 21 of 51 (13 FAILED) (0 secs / 0.144 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 21 of 51 (13 FAILED) (0 secs / 0.144 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 21 of 51 (13 FAILED) (0 secs / 0.144 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 22 of 51 (13 FAILED) (0 secs / 0.186 secs)
+08 12 2025 06:46:48.360:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.361:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.361:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.362:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.362:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.363:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 22 of 51 (13 FAILED) (0 secs / 0.186 secs)
+LOG: null, '', '--in constructor'
+08 12 2025 06:46:48.367:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.367:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+08 12 2025 06:46:48.368:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.368:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+08 12 2025 06:46:48.369:WARN [web-server]: 404: /_karma_webpack_/assets/greentick.png
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 22 of 51 (13 FAILED) (0 secs / 0.186 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 22 of 51 (13 FAILED) (0 secs / 0.186 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 23 of 51 (13 FAILED) (0 secs / 0.195 secs)
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 23 of 51 (13 FAILED) (0 secs / 0.195 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 23 of 51 (13 FAILED) (0 secs / 0.195 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 23 of 51 (13 FAILED) (0 secs / 0.195 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+LOG: Object{}, '--journal data saved'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 23 of 51 (13 FAILED) (0 secs / 0.195 secs)
+LOG: Object{}, '--journal data saved'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 24 of 51 (13 FAILED) (0 secs / 0.224 secs)
+08 12 2025 06:46:48.403:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.404:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.404:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.405:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.405:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.406:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.407:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.407:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+08 12 2025 06:46:48.408:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.408:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+08 12 2025 06:46:48.410:WARN [web-server]: 404: /_karma_webpack_/assets/greentick.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 24 of 51 (13 FAILED) (0 secs / 0.224 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 24 of 51 (13 FAILED) (0 secs / 0.224 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 24 of 51 (13 FAILED) (0 secs / 0.224 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 25 of 51 (13 FAILED) (0 secs / 0.233 secs)
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 25 of 51 (13 FAILED) (0 secs / 0.233 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 25 of 51 (13 FAILED) (0 secs / 0.233 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 25 of 51 (13 FAILED) (0 secs / 0.233 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+08 12 2025 06:46:48.428:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.429:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.430:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.430:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.431:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.431:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+LOG: null, '', '--in constructor'
+08 12 2025 06:46:48.435:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.436:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+08 12 2025 06:46:48.436:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.437:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+08 12 2025 06:46:48.438:WARN [web-server]: 404: /_karma_webpack_/assets/greentick.png
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+LOG: Object{exercise_title: 'Test Exercise', videoUrl: 'test-url'}, '--exerciseData'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+LOG: Object{exercise_title: 'Test Exercise', videoUrl: 'test-url'}, '--exerciseData'
+LOG: Object{}, '--exercise marked in completed section'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 26 of 51 (13 FAILED) (0 secs / 0.239 secs)
+LOG: Object{}, '--exercise marked in completed section'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+LOG: 1, '--data'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: 1, '--data'
+LOG: Set{}, '--Completed Exercise Titles'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 27 of 51 (13 FAILED) (0 secs / 0.248 secs)
+LOG: Set{}, '--Completed Exercise Titles'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 28 of 51 (13 FAILED) (0 secs / 0.255 secs)
+08 12 2025 06:46:48.448:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.448:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.449:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.450:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.450:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.451:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.451:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 28 of 51 (13 FAILED) (0 secs / 0.255 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 28 of 51 (13 FAILED) (0 secs / 0.255 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 28 of 51 (13 FAILED) (0 secs / 0.255 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 29 of 51 (13 FAILED) (0 secs / 0.262 secs)
+08 12 2025 06:46:48.464:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.465:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.466:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.467:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.467:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.468:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.471:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.472:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+08 12 2025 06:46:48.472:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.473:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+08 12 2025 06:46:48.475:WARN [web-server]: 404: /_karma_webpack_/assets/greentick.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 29 of 51 (13 FAILED) (0 secs / 0.262 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 29 of 51 (13 FAILED) (0 secs / 0.262 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 29 of 51 (13 FAILED) (0 secs / 0.262 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+08 12 2025 06:46:48.488:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.489:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.489:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.490:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+LOG: null, '', '--in constructor'
+08 12 2025 06:46:48.492:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.492:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.494:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.494:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+LOG: 1, '--data'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+LOG: 1, '--data'
+LOG: Set{}, '--Completed Quote Texts Set'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 30 of 51 (13 FAILED) (0 secs / 0.27 secs)
+LOG: Set{}, '--Completed Quote Texts Set'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+08 12 2025 06:46:48.497:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.497:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+08 12 2025 06:46:48.497:WARN [web-server]: 404: /_karma_webpack_/assets/greentick.png
+LOG: null, '', '--in constructor'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+LOG: null, '', '--in constructor'
+LOG: '123', 'Test User'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+LOG: '123', 'Test User'
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+LOG: [Object{date_completed: '2025-12-08T06:46:48.097Z', quote: 'Test Quote', _id: 'q1'}], '--completedQuotes'
+LOG: Object{_id: 'q1', quote_text: 'Test Quote'}, '--quoteData'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+LOG: Object{_id: 'q1', quote_text: 'Test Quote'}, '--quoteData'
+LOG: Object{}, '--quote marked in completed section'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 31 of 51 (13 FAILED) (0 secs / 0.279 secs)
+LOG: Object{}, '--quote marked in completed section'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 32 of 51 (13 FAILED) (0 secs / 0.285 secs)
+08 12 2025 06:46:48.507:WARN [web-server]: 404: /_karma_webpack_/assets/quote_box_icon.png
+08 12 2025 06:46:48.508:WARN [web-server]: 404: /_karma_webpack_/assets/exercise_box_icon.png
+08 12 2025 06:46:48.508:WARN [web-server]: 404: /_karma_webpack_/assets/journal_box_icon.png
+08 12 2025 06:46:48.509:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.509:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.510:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.511:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.511:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 33 of 51 (13 FAILED) (0 secs / 0.294 secs)
+08 12 2025 06:46:48.518:WARN [web-server]: 404: /_karma_webpack_/assets/Logo.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 34 of 51 (13 FAILED) (0 secs / 0.297 secs)
+08 12 2025 06:46:48.525:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.525:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 34 of 51 (13 FAILED) (0 secs / 0.297 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 34 of 51 (13 FAILED) (0 secs / 0.297 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 34 of 51 (13 FAILED) (0 secs / 0.297 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 34 of 51 (13 FAILED) (0 secs / 0.297 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 35 of 51 (13 FAILED) (0 secs / 0.313 secs)
+08 12 2025 06:46:48.542:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.543:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.544:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.544:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.544:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 35 of 51 (13 FAILED) (0 secs / 0.313 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 35 of 51 (13 FAILED) (0 secs / 0.313 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 35 of 51 (13 FAILED) (0 secs / 0.313 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 35 of 51 (13 FAILED) (0 secs / 0.313 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 36 of 51 (13 FAILED) (0 secs / 0.318 secs)
+08 12 2025 06:46:48.549:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.550:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 36 of 51 (13 FAILED) (0 secs / 0.318 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 36 of 51 (13 FAILED) (0 secs / 0.318 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 36 of 51 (13 FAILED) (0 secs / 0.318 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 36 of 51 (13 FAILED) (0 secs / 0.318 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 37 of 51 (13 FAILED) (0 secs / 0.322 secs)
+08 12 2025 06:46:48.557:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.557:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.558:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.558:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.559:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 37 of 51 (13 FAILED) (0 secs / 0.322 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 37 of 51 (13 FAILED) (0 secs / 0.322 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 37 of 51 (13 FAILED) (0 secs / 0.322 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 37 of 51 (13 FAILED) (0 secs / 0.322 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 38 of 51 (13 FAILED) (0 secs / 0.328 secs)
+08 12 2025 06:46:48.562:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.563:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 38 of 51 (13 FAILED) (0 secs / 0.328 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 38 of 51 (13 FAILED) (0 secs / 0.328 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 38 of 51 (13 FAILED) (0 secs / 0.328 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 38 of 51 (13 FAILED) (0 secs / 0.328 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 39 of 51 (13 FAILED) (0 secs / 0.333 secs)
+08 12 2025 06:46:48.571:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.571:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.572:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.573:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.573:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 39 of 51 (13 FAILED) (0 secs / 0.333 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 39 of 51 (13 FAILED) (0 secs / 0.333 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 39 of 51 (13 FAILED) (0 secs / 0.333 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 39 of 51 (13 FAILED) (0 secs / 0.333 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 40 of 51 (13 FAILED) (0 secs / 0.338 secs)
+08 12 2025 06:46:48.577:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.577:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 40 of 51 (13 FAILED) (0 secs / 0.338 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 40 of 51 (13 FAILED) (0 secs / 0.338 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 40 of 51 (13 FAILED) (0 secs / 0.338 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 40 of 51 (13 FAILED) (0 secs / 0.338 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 41 of 51 (13 FAILED) (0 secs / 0.342 secs)
+08 12 2025 06:46:48.584:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.585:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.585:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.586:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.586:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 41 of 51 (13 FAILED) (0 secs / 0.342 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 41 of 51 (13 FAILED) (0 secs / 0.342 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 41 of 51 (13 FAILED) (0 secs / 0.342 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 41 of 51 (13 FAILED) (0 secs / 0.342 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 42 of 51 (13 FAILED) (0 secs / 0.349 secs)
+08 12 2025 06:46:48.590:WARN [web-server]: 404: /_karma_webpack_/assets/Back_icon.png
+08 12 2025 06:46:48.591:WARN [web-server]: 404: /_karma_webpack_/assets/Front_icon.png
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 42 of 51 (13 FAILED) (0 secs / 0.349 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', quote: 'Test Quote 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', quote: 'Test Quote 2', user_id: '123'}], '--> completedquotes data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 42 of 51 (13 FAILED) (0 secs / 0.349 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', exercise_title: 'Test Exercise 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', exercise_title: 'Test Exercise 2', user_id: '123'}], '--> completed breathing exercises data..'
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 42 of 51 (13 FAILED) (0 secs / 0.349 secs)
+LOG: [Object{date_completed: '2025-03-20', day_number: 'Day 1', journal_content: 'Test Journal 1', user_id: '123'}, Object{date_completed: '2025-03-21', day_number: 'Day 2', journal_content: 'Test Journal 2', user_id: '123'}], '--> completed journals data..'
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 42 of 51 (13 FAILED) (0 secs / 0.349 secs)
+LOG: 'quotes', '--> completed data state'
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 43 of 51 (13 FAILED) (0 secs / 0.354 secs)
+08 12 2025 06:46:48.599:WARN [web-server]: 404: /_karma_webpack_/assets/target.png
+08 12 2025 06:46:48.601:WARN [web-server]: 404: /_karma_webpack_/assets/quotes_icon.png
+08 12 2025 06:46:48.602:WARN [web-server]: 404: /_karma_webpack_/assets/breath_icon.png
+08 12 2025 06:46:48.603:WARN [web-server]: 404: /_karma_webpack_/assets/journal_icon.png
+08 12 2025 06:46:48.603:WARN [web-server]: 404: /_karma_webpack_/assets/logout_icon.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 44 of 51 (13 FAILED) (0 secs / 0.388 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 45 of 51 (13 FAILED) (0 secs / 0.395 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 46 of 51 (13 FAILED) (0 secs / 0.397 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 47 of 51 (13 FAILED) (0 secs / 0.398 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 48 of 51 (13 FAILED) (0 secs / 0.427 secs)
+08 12 2025 06:46:48.678:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img1.png
+08 12 2025 06:46:48.679:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img2.png
+08 12 2025 06:46:48.680:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img3.png
+08 12 2025 06:46:48.680:WARN [web-server]: 404: /_karma_webpack_/assets/homepage_img4.png
+08 12 2025 06:46:48.681:WARN [web-server]: 404: /_karma_webpack_/assets/Logo.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 49 of 51 (13 FAILED) (0 secs / 0.435 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 50 of 51 (13 FAILED) (0 secs / 0.442 secs)
+08 12 2025 06:46:48.698:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img1.png
+08 12 2025 06:46:48.699:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img2.png
+08 12 2025 06:46:48.700:WARN [web-server]: 404: /_karma_webpack_/assets/homepage-img3.png
+08 12 2025 06:46:48.701:WARN [web-server]: 404: /_karma_webpack_/assets/homepage_img4.png
+08 12 2025 06:46:48.701:WARN [web-server]: 404: /_karma_webpack_/assets/Logo.png
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 51 of 51 (13 FAILED) (0 secs / 0.451 secs)
+Chrome Headless 142.0.0.0 (Linux x86_64): Executed 51 of 51 (13 FAILED) (0.584 secs / 0.451 secs)
+TOTAL: 13 FAILED, 38 SUCCESS
+✔ Browser application bundle generation complete.
+
+=============================== Coverage summary ===============================
+Statements   : 61.24% ( 226/369 )
+Branches     : 41.93% ( 26/62 )
+Functions    : 59.09% ( 65/110 )
+Lines        : 60.17% ( 204/339 )
+================================================================================
+✔ Browser application bundle generation complete.
+Error: Process completed with exit code 1.
