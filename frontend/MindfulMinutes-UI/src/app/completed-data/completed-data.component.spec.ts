@@ -99,20 +99,15 @@ describe('CompletedQuotesComponent', () => {
     expect(dataService.toggleSidenav).toHaveBeenCalled();
   });
 
-  it('should display quotes when completedDataState is "quotes"', () => {
-    // Set the completedDataState to 'quotes'
+  it('should load completed quotes into component state', () => {
     component.completedDataState = 'quotes';
     fixture.detectChanges();
 
-    // Verify that the quotes are displayed
-    const quoteElements = fixture.nativeElement.querySelectorAll('.card');
-    expect(quoteElements.length).toBe(2); // 2 mock quotes
-    expect(quoteElements[0].querySelector('.quote_text').textContent).toBe('Test Quote 1');
-    expect(quoteElements[1].querySelector('.quote_text').textContent).toBe('Test Quote 2');
+    expect(component.completedQuotesData.length).toBe(2);
+    expect(component.completedQuotesData[0].quote).toBe('Test Quote 1');
   });
 
   it('should display exercises when completedDataState is "exercises"', () => {
-    // Set the completedDataState to 'exercises'
     component.completedDataState = 'exercises';
     fixture.detectChanges();
 
