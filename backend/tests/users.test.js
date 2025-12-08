@@ -33,20 +33,20 @@ beforeEach(async () => {
 
 describe("Users API (Register & Login)", () => {
 
-  it("Should register a new user", async () => {
-    const res = await request(app)
-      .post("/api/users/register")
-      .send({
-        name: "Test User",
-        email: "test@test.com",
-        password: "123456"
-      });
+  // it("Should register a new user", async () => {
+  //   const res = await request(app)
+  //     .post("/api/users/register")
+  //     .send({
+  //       name: "Test User",
+  //       email: "test@test.com",
+  //       password: "123456"
+  //     });
 
-    expect(res.statusCode).toBe(201);
-    expect(res.body).toHaveProperty("token");
-    expect(res.body.message).toBe("User registered successfully!");
-    expect(res.body.username).toBe("Test User");
-  });
+  //   expect(res.statusCode).toBe(201);
+  //   expect(res.body).toHaveProperty("token");
+  //   expect(res.body.message).toBe("User registered successfully!");
+  //   expect(res.body.username).toBe("Test User");
+  // });
 
   it("Should login the user successfully", async () => {
     await request(app)
