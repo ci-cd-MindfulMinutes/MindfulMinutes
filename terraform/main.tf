@@ -21,6 +21,23 @@ resource "aws_security_group" "backend_sg" {
     description = "Backend API"
   }
 
+  # Allow Grafana monitoring dashboard
+  ingress {
+    from_port   = 3003
+    to_port     = 3003
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Grafana Dashboard"
+  }
+
+  # Allow coverage reports server
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Test Coverage Reports"
+  }
 
   # Allow all outbound traffic
   egress {
