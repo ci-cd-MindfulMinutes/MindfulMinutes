@@ -48,9 +48,9 @@ describe('AppService', () => {
       expect(count).toBe(1);
     });
 
-    httpMock.expectOne('http://localhost:4000/api/completedQuotes/123').flush(mockQuotes);
-    httpMock.expectOne('http://localhost:4000/api/completedBreathingExercises/123').flush(mockBreathing);
-    httpMock.expectOne('http://localhost:4000/api/completedJournal/123').flush(mockJournals);
+    httpMock.expectOne('http://localhost:3000/api/completedQuotes/123').flush(mockQuotes);
+    httpMock.expectOne('http://localhost:3000/api/completedBreathingExercises/123').flush(mockBreathing);
+    httpMock.expectOne('http://localhost:3000/api/completedJournal/123').flush(mockJournals);
   });
 
   it('should return last completed date', () => {
@@ -71,9 +71,9 @@ describe('AppService', () => {
     expect(result?.toISOString().split('T')[0]).toBe(sameDate);
   });
 
-  const qReq = httpMock.expectOne('http://localhost:4000/api/completedQuotes/123');
-  const bReq = httpMock.expectOne('http://localhost:4000/api/completedBreathingExercises/123');
-  const jReq = httpMock.expectOne('http://localhost:4000/api/completedJournal/123');
+  const qReq = httpMock.expectOne('http://localhost:3000/api/completedQuotes/123');
+  const bReq = httpMock.expectOne('http://localhost:3000/api/completedBreathingExercises/123');
+  const jReq = httpMock.expectOne('http://localhost:3000/api/completedJournal/123');
 
   qReq.flush(mockQuotes);
   bReq.flush(mockExercises);
@@ -83,7 +83,7 @@ describe('AppService', () => {
   it('should fetch quotes', () => {
     service.getQuote().subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/quotes/');
+    const req = httpMock.expectOne('http://localhost:3000/api/quotes/');
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -91,7 +91,7 @@ describe('AppService', () => {
   it('should fetch breathing exercises', () => {
     service.getBreathingExercise().subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/breathingExercise/');
+    const req = httpMock.expectOne('http://localhost:3000/api/breathingExercise/');
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -101,7 +101,7 @@ describe('AppService', () => {
 
     service.postJournal('123', payload).subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedJournal/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedJournal/123');
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
@@ -109,7 +109,7 @@ describe('AppService', () => {
   it('should fetch completed quotes', () => {
     service.getCompletedQuotes('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedQuotes/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedQuotes/123');
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -117,7 +117,7 @@ describe('AppService', () => {
   it('should fetch completed breathing exercises', () => {
     service.getCompletedBreathingExercises('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedBreathingExercises/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedBreathingExercises/123');
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -125,7 +125,7 @@ describe('AppService', () => {
   it('should fetch completed journals', () => {
     service.getCompletedJournals('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedJournal/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedJournal/123');
     expect(req.request.method).toBe('GET');
     req.flush([]);
   });
@@ -133,7 +133,7 @@ describe('AppService', () => {
   it('should mark quote as completed', () => {
     service.markQuoteAsCompleted('123', 'q1', 'test quote').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedQuotes/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedQuotes/123');
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
@@ -141,7 +141,7 @@ describe('AppService', () => {
   it('should mark breathing exercise as completed', () => {
     service.markBreathingExerciseAsCompleted('123', 'exercise', 'video').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedBreathingExercises/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedBreathingExercises/123');
     expect(req.request.method).toBe('POST');
     req.flush({});
   });
@@ -149,7 +149,7 @@ describe('AppService', () => {
   it('should delete all completed quotes', () => {
     service.deleteAllCompletedQuotes('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedQuotes/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedQuotes/123');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
@@ -157,7 +157,7 @@ describe('AppService', () => {
   it('should delete all completed breathing exercises', () => {
     service.deleteAllCompletedBreathingExercises('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedBreathingExercises/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedBreathingExercises/123');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
@@ -165,7 +165,7 @@ describe('AppService', () => {
   it('should delete all completed journals', () => {
     service.deleteAllCompletedJournals('123').subscribe();
 
-    const req = httpMock.expectOne('http://localhost:4000/api/completedJournal/123');
+    const req = httpMock.expectOne('http://localhost:3000/api/completedJournal/123');
     expect(req.request.method).toBe('DELETE');
     req.flush({});
   });
