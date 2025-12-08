@@ -178,6 +178,8 @@ jobs:
               'echo \"==================== LOGGING INTO ECR ====================\"',
               'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}',
               'echo \"==================== STOPPING EXISTING CONTAINERS ====================\"',
+              'docker stop mindfulminutes-backend || true',
+              'docker rm mindfulminutes-backend || true',
               'docker-compose -f docker-compose.ec2.yml down || true',
               'echo \"==================== PULLING BACKEND IMAGE FROM ECR ====================\"',
               'docker-compose -f docker-compose.ec2.yml pull backend || echo \"Backend pull failed, continuing...\"',
