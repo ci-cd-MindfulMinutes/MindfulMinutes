@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { NgClass } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 class MockDataService {
   dayCount$ = of(10);
@@ -28,7 +29,8 @@ describe('SidenavComponent', () => {
       providers: [
         { provide: DataService, useClass: MockDataService },
         { provide: Router, useClass: MockRouter }
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SidenavComponent);
