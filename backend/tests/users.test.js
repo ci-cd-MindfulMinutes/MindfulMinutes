@@ -46,7 +46,7 @@ describe("Users API (Register & Login)", () => {
   //   expect(res.body).toHaveProperty("token");
   //   expect(res.body.message).toBe("User registered successfully!");
   //   expect(res.body.username).toBe("Test User");
-  // });
+  // });//
 
   it("Should login the user successfully", async () => {
     await request(app)

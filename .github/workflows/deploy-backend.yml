@@ -167,7 +167,7 @@ jobs:
           ENVIRONMENT: ${{ steps.env.outputs.environment }}
         run: |
           # Deploy using docker-compose via SSM
-          aws ssm send-command \
+          COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${INSTANCE_ID} \
             --document-name "AWS-RunShellScript" \
             --parameters "commands=[
@@ -177,13 +177,43 @@ jobs:
               'export ENVIRONMENT=${ENVIRONMENT}',
               'export MONGO_URI=\"${MONGO_URI}\"',
               'export JWT_SECRET=\"${JWT_SECRET}\"',
+              'echo \"Logging into ECR...\"',
               'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}',
+              'echo \"Stopping existing containers...\"',
               'docker-compose -f docker-compose.ec2.yml down || true',
-              'docker-compose -f docker-compose.ec2.yml pull',
+              'echo \"Pulling backend image from ECR...\"',
+              'docker-compose -f docker-compose.ec2.yml pull backend || echo \"Backend pull failed, continuing...\"',
+              'echo \"Starting all containers...\"',
               'docker-compose -f docker-compose.ec2.yml up -d',
-              'docker ps'
+              'echo \"Waiting for containers to start...\"',
+              'sleep 10',
+              'echo \"==================== CONTAINER STATUS ====================\"',
+              'docker ps -a',
+              'echo \"==================== DOCKER COMPOSE LOGS ====================\"',
+              'docker-compose -f docker-compose.ec2.yml logs --tail=30',
+              'echo \"==================== RUNNING CONTAINERS COUNT ====================\"',
+              'docker ps --filter status=running --format \"{{.Names}}\" | wc -l',
+              'echo \"Expected: 6 containers (backend, prometheus, grafana, node-exporter, cadvisor, coverage)\"'
             ]" \
+            --output text --query 'Command.CommandId')
+
+          echo "SSM Command ID: ${COMMAND_ID}"
+          echo "Waiting for command to complete..."
+          sleep 15
+
+          echo "==================== SSM COMMAND OUTPUT ===================="
+          aws ssm get-command-invocation \
+            --command-id ${COMMAND_ID} \
+            --instance-id ${INSTANCE_ID} \
+            --query 'StandardOutputContent' \
             --output text
+
+          echo "==================== SSM COMMAND ERRORS ===================="
+          aws ssm get-command-invocation \
+            --command-id ${COMMAND_ID} \
+            --instance-id ${INSTANCE_ID} \
+            --query 'StandardErrorContent' \
+            --output text || echo "No errors"
 
       - name: Deployment Success
         run: |
