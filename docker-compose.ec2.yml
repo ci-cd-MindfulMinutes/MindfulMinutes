@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: mindfulminutes-backend
+    image: ${ECR_REGISTRY}/mindfulminutes-${ENVIRONMENT}-backend:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
+    restart: unless-stopped
+    networks:
+      - mindful-network
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    container_name: mindful-prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    restart: unless-stopped
+    networks:
+      - mindful-network
+
+  grafana:
+    image: grafana/grafana:10.4.1
+    container_name: mindful-grafana
+    ports:
+      - "3003:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    networks:
+      - mindful-network
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: mindful-node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    networks:
+      - mindful-network
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: mindful-cadvisor
+    ports:
+      - "8082:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    restart: unless-stopped
+    networks:
+      - mindful-network
+
+  coverage:
+    image: nginx:alpine
+    container_name: mindful-coverage
+    ports:
+      - "8080:80"
+    volumes:
+      - /home/ec2-user/coverage:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    networks:
+      - mindful-network
+
+volumes:
+  grafana_data:
+  prometheus_data:
+
+networks:
+  mindful-network:
+    driver: bridge

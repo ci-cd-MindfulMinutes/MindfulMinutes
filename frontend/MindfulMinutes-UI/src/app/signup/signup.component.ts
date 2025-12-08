@@ -18,7 +18,6 @@ import { environment } from '../../environments/environment';
     HeaderComponent,
     CustomModule,
     JsonPipe,
-    HttpClientModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
