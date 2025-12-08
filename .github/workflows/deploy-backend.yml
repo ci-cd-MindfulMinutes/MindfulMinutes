@@ -158,6 +158,11 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters "commands=[
               'cd /home/ec2-user',
+              'export AWS_REGION=${AWS_REGION}',
+              'export ECR_REGISTRY=${ECR_REGISTRY}',
+              'export ENVIRONMENT=${ENVIRONMENT}',
+              'export MONGO_URI=\"${MONGO_URI}\"',
+              'export JWT_SECRET=\"${JWT_SECRET}\"',
               'echo \"==================== DOWNLOADING DEPLOYMENT PACKAGE ====================\"',
               'aws s3 cp s3://mindfulminutes-${ENVIRONMENT}-frontend/deploy/deploy-package.tar.gz .',
               'echo \"==================== EXTRACTING DEPLOYMENT PACKAGE ====================\"',
@@ -167,11 +172,6 @@ jobs:
               'ls -la',
               'ls -la monitoring/ || echo \"monitoring directory not found\"',
               'ls -la coverage/ || echo \"coverage directory not found\"',
-              'export AWS_REGION=${AWS_REGION}',
-              'export ECR_REGISTRY=${ECR_REGISTRY}',
-              'export ENVIRONMENT=${ENVIRONMENT}',
-              'export MONGO_URI=\"${MONGO_URI}\"',
-              'export JWT_SECRET=\"${JWT_SECRET}\"',
               'echo \"==================== LOGGING INTO ECR ====================\"',
               'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}',
               'echo \"==================== STOPPING EXISTING CONTAINERS ====================\"',
