@@ -54,7 +54,7 @@ describe('CompletedQuotesComponent', () => {
         { provide: DataService, useClass: MockDataService },
         { provide: AppService, useClass: MockAppService }
       ],
-      schemas: [NO_ERRORS_SCHEMA] // Ignore unknown elements and components
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CompletedQuotesComponent);
