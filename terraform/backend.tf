@@ -11,6 +11,6 @@ terraform {
     key            = "terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "mindfulminutes-terraform-state-lock"
-    encrypt        = true
+    encrypt        = true    
   }
 }
