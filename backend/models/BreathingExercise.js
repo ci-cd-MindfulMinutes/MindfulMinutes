@@ -1,3 +1,4 @@
+// model breathingExercise
 const mongoose = require('mongoose')
 
 const BreathingExerciseSchema = new mongoose.Schema({

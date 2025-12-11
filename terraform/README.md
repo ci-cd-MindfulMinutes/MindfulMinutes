@@ -87,7 +87,7 @@ terraform output
 ```bash
 # Make sure you're in the right workspace first!
 terraform workspace select dev
-terraform destroy -var-file="dev.tfvars"
+terraform destroy -var-file="dev.tfvars"    
 ```
 
 ## Important Notes
