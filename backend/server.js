@@ -35,6 +35,7 @@ app.use('/api/completedJournal', CompletedJournalRoutes)
 app.get('/', (req, res) => {
     res.send('MindfulMinutes API is running fine...');
 });
+// connection to MongoDB
 
 if (process.env.NODE_ENV !== 'test') {
   mongoose.connect(process.env.MONGO_URI, {
