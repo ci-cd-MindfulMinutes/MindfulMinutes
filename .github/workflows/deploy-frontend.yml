@@ -18,9 +18,33 @@ on:
           - prod
 
 jobs:
+  test-frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/MindfulMinutes-UI/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend/MindfulMinutes-UI
+        run: npm ci
+
+      - name: Run tests
+        working-directory: frontend/MindfulMinutes-UI
+        run: npm run test:ci
+
   deploy-frontend:
     name: Build and Deploy Frontend
     runs-on: ubuntu-latest
+    needs: [test-frontend]
 
     steps:
       - name: Checkout code
