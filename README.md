@@ -57,7 +57,7 @@ npm install
 Create a .env file in /backend:
 
 ```bash
-PORT=4000
+PORT=3000
 MONGO_URI=mongodb://localhost:27017/mindfulminutes
 JWT_SECRET=yourSuperSecretKey
 ```

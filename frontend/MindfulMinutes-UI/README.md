@@ -57,3 +57,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Deployment
+
+This application is automatically deployed to AWS S3 and CloudFront via GitHub Actions when changes are pushed to the dev or main branches.

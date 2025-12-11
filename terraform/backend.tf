@@ -4,6 +4,7 @@
 # - Dev: env:/dev/terraform.tfstate
 # - Prod: env:/prod/terraform.tfstate
 
+
 terraform {
   backend "s3" {
     bucket         = "mindfulminutes-terraform-state"
@@ -11,6 +12,5 @@ terraform {
     region         = "us-east-1"
     dynamodb_table = "mindfulminutes-terraform-state-lock"
     encrypt        = true
-    profile= "default"
   }
 }

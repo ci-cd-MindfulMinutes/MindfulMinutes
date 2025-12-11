@@ -30,3 +30,8 @@ output "environment" {
   description = "Environment name"
   value       = var.environment
 }
+
+output "api_gateway_url" {
+  description = "API Gateway endpoint URL for backend"
+  value       = "${aws_api_gateway_stage.backend.invoke_url}"
+}
